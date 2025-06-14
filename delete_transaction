@@ -1,0 +1,21 @@
+<?php
+include 'config.php'; // Veritabanı bağlantısı
+
+// İşlem ID ve Hesap ID'sini al
+$islemID = $_GET['islem_id'];
+$hesapID = $_GET['hesap_id'];
+
+// İşlemi silmek için SQL sorgusu
+$sql = "DELETE FROM Islemler WHERE IslemID = ? AND HesapID = ?";
+$params = array($islemID, $hesapID);
+
+$stmt = sqlsrv_query($conn, $sql, $params);
+
+if ($stmt) {
+    echo "İşlem başarıyla silindi.";
+    echo "<br><a href='list_transactions.php?hesap_id=$hesapID'>İşlemlere Geri Dön</a>";
+} else {
+    echo "Hata: ";
+    print_r(sqlsrv_errors());
+}
+?>
